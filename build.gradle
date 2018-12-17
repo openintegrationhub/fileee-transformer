@@ -1,0 +1,80 @@
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.60"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:1.2.0"
+    }
+}
+
+apply plugin: org.junit.platform.gradle.plugin.JUnitPlatformPlugin
+apply plugin: org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'java-library-distribution'
+
+group = 'com.fileee.oihTransformer'
+version = '1.0.0'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    mavenCentral()
+    mavenLocal()
+}
+
+def arrow_version = "0.7.3"
+dependencies {
+    // elasticio/oih jvm
+    compile "io.elastic:sailor-jvm:2.1.0"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    compile 'com.github.kittinunf.fuel:fuel:1.15.0' //for JVM
+
+    compile "io.arrow-kt:arrow-core:$arrow_version"
+    compile "io.arrow-kt:arrow-syntax:$arrow_version"
+    compile "io.arrow-kt:arrow-typeclasses:$arrow_version"
+    compile "io.arrow-kt:arrow-data:$arrow_version"
+    compile "io.arrow-kt:arrow-instances-core:$arrow_version"
+    compile "io.arrow-kt:arrow-instances-data:$arrow_version"
+
+    compile "io.arrow-kt:arrow-effects:$arrow_version" //optional
+
+    testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.7'
+    testCompile 'io.kotlintest:kotlintest-assertions-arrow:3.1.9'
+    testCompile 'io.mockk:mockk:1.8.6'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+uploadArchives {
+    repositories {
+        mavenLocal()
+    }
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
