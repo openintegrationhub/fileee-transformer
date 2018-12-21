@@ -25,8 +25,8 @@ Currently the transformer operates solely on the address-model, more specificall
 
 ## Available actions
 
-- transformPersonToOIH Transform a fileee person/contact to an oih contact
-- transformPersonFromOIH Transform a oih contact to a fileee person/contact
+- transformPersonToOIH Transform a fileee [contact](https://github.com/openintegrationhub/fileee-transformer/blob/master/schemas/contact.json) to an oih contact
+- transformPersonFromOIH Transform a oih contact to a fileee [contact](https://github.com/openintegrationhub/fileee-transformer/blob/master/schemas/contact.json)
 
 ## How it works
 
@@ -104,3 +104,7 @@ object ContactTransformOIHInstance : TransformOIH<EitherPartialOf<ParseError>, C
 }
 ```
 > The transform instance operates on the Either effect because when converting to fileee a name is required. Hence conversion may fail which is modeled by Either.
+
+## License
+
+Apache-2.0 © [Fileee GmbH](https://www.fileee.com/)
