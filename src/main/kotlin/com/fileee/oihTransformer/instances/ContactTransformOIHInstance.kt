@@ -60,9 +60,7 @@ object ContactTransformOIHInstance : TransformOIH<EitherPartialOf<HandlerExcepti
 
     private fun transformAddressToFileee(addr: OIHAddress): Address = Address(
             id = none(), // TODO Fileee requires an id, otherwise new contacts will be generated, however this is not yet part of the oih data model
-            street = Option.applicative().map(addr.street, addr.streetNumber) { (street, streetNr) ->
-                "$street $streetNr"
-            }.fix(),
+            street = addr.street.flatMap { str -> addr.streetNumber.map { "$str $it"} },
             city = addr.city,
             countryCode = addr.countryCode,
             zipCode = addr.zipCode
