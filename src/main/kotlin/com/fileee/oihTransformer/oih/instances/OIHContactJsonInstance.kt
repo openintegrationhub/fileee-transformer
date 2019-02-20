@@ -50,8 +50,8 @@ object OIHContactToJsonInstance : ToJson<ForId, OIHContact> {
             }.orNull()
         }
         oihId { contact.oihId.orNull() }
-        oihCreated { contact.oihCreated.map { Modification.toJson().run { it.toJson() } }.orNull() }
-        oihLastModified { contact.oihLastModified.map { Modification.toJson().run { it.toJson() } }.orNull() }
+        oihCreated { contact.oihCreated.map { Modification.toJson().run { it.toJson().value() } }.orNull() }
+        oihLastModified { contact.oihLastModified.map { Modification.toJson().run { it.toJson().value() } }.orNull() }
         oihApplicationRecords {
             contact.oihApplicationRecords.foldLeft(Json.createArrayBuilder()) { acc, appRed ->
                 acc.add(OIHApplicationRecord.toJson().run { appRed.toJson() }.value())
@@ -75,7 +75,7 @@ object OIHContactFromJsonInstance : FromJson<EitherPartialOf<ParseError>, OIHCon
             tryGetModification(oihLastModified).optional(),
             tryGetApplicationRecords(oihApplicationRecords)
     ) { (name, logo, firstName, lastName, addresses, contactData, oihId, oihCreated, oihLastModified, oihApplicationRecords) ->
-        when (name) {
+        when (name.or(logo)) {
             is Some -> OIHContact.OIHOrganization(
                     name = name,
                     logo = logo,

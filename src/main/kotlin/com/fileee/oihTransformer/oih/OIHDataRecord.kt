@@ -19,7 +19,7 @@ abstract class OIHDataRecord(
 }
 
 // TODO applicationUid. This is currently blocked because there is no final decision on this topic afaik
-class OIHApplicationRecord(
+data class OIHApplicationRecord(
         val applicationUid: String = FileeeApplicationId,
         val recordUid: Option<String>,
         val created: Option<Modification>,
@@ -35,7 +35,7 @@ class OIHApplicationRecord(
     }
 }
 
-class Modification(
+data class Modification(
         val userId: String,
         val type: String,
         val timestamp: String

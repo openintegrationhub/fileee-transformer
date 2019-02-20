@@ -13,30 +13,32 @@ import com.fileee.oihTransformer.utils.ParseError
 import com.fileee.oihTransformer.utils.tryGetString
 import javax.json.JsonObject
 
-object ModificationToJsonInstance: ToJson<ForId, Modification> {
-    override fun Modification.toJson(): Kind<ForId, JsonObject> = Id.just(
-            convertJson(this)
-    )
+object ModificationToJsonInstance : ToJson<ForId, Modification> {
+  override fun Modification.toJson(): Kind<ForId, JsonObject> = Id.just(
+    convertJson(this)
+  )
 
-    fun convertJson(mod: Modification): JsonObject = JsonBuilder {
-        userId { mod.userId }
-        timestamp { mod.timestamp }
-        type { mod.type }
-    }.build()
+  fun convertJson(mod: Modification): JsonObject = JsonBuilder {
+    userId { mod.userId }
+    timestamp { mod.timestamp }
+    type { mod.type }
+  }.build()
 }
 
 fun Modification.Companion.toJson() = ModificationToJsonInstance
 
-object ModificationFromJsonInstance: FromJson<EitherPartialOf<ParseError>, Modification> {
-    override fun JsonObject.fromJson(): Kind<EitherPartialOf<ParseError>, Modification> = Either.applicative<ParseError>().map(
-            tryGetString(userId),
-            tryGetString(timestamp),
-            tryGetString(type)
-    ) { (userId, timestamp, type) -> Modification(
-            userId = userId,
-            timestamp = timestamp,
-            type = type
-    ) }
+object ModificationFromJsonInstance : FromJson<EitherPartialOf<ParseError>, Modification> {
+  override fun JsonObject.fromJson(): Kind<EitherPartialOf<ParseError>, Modification> = Either.applicative<ParseError>().map(
+    tryGetString(userId),
+    tryGetString(timestamp),
+    tryGetString(type)
+  ) { (userId, timestamp, type) ->
+    Modification(
+      userId = userId,
+      timestamp = timestamp,
+      type = type
+    )
+  }
 }
 
 fun Modification.Companion.fromJson() = ModificationFromJsonInstance

@@ -47,7 +47,7 @@ dependencies {
 
     compile "io.arrow-kt:arrow-effects:$arrow_version" //optional
 
-    testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.7'
+    testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.10'
     testCompile 'io.kotlintest:kotlintest-assertions-arrow:3.1.9'
     testCompile 'io.mockk:mockk:1.8.6'
 }

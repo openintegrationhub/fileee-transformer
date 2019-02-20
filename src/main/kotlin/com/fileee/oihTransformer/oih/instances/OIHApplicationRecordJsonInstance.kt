@@ -24,12 +24,12 @@ object OIHApplicationRecordToJsonInstance : ToJson<ForId, OIHApplicationRecord> 
     fun convertJson(appRecord: OIHApplicationRecord): JsonObject = JsonBuilder {
         applicationUid { appRecord.applicationUid }
         recordUid { appRecord.recordUid.orNull() }
-        lastModified { appRecord.lastModified.orNull() }
-        created { appRecord.created.orNull() }
+        lastModified { Modification.toJson().run { appRecord.lastModified.map { it.toJson().value() }.orNull() } }
+        created { Modification.toJson().run { appRecord.created.map { it.toJson().value() }.orNull() } }
         modificationHistory {
             appRecord.modificationHistory.map {
                 it.foldLeft(Json.createArrayBuilder()) { acc, mod ->
-                    acc.add(Modification.toJson().run { mod.toJson().fix().value })
+                    acc.add(Modification.toJson().run { mod.toJson().value() })
                 }.build()
             }.orNull()
         }
