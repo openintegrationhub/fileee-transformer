@@ -1,0 +1,18 @@
+{
+  "title": "Fileee transformer",
+  "description": "Openintegrationhub transformer for fileee data",
+  "docsUrl": "https://github.com/openintegrationhub/fileee-transformer",
+  "url": "https://www.fileee.com/",
+  "actions": {
+    "transformPersonToOIH": {
+      "main": "com.fileee.oihTransformer.actions.TransformFileeeContactToOIH",
+      "title": "Transform fileee contact to oih",
+      "description": "Transform a fileee contact to an oih organization"
+    },
+    "transformPersonFromOIH": {
+      "main": "com.fileee.oihTransformer.actions.TransformOIHContactToFileee",
+      "title": "Transform an oih contact to fileee",
+      "description": "Transform an oih contact to a fileee contact"
+    }
+  }
+}
